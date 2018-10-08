@@ -1,0 +1,32 @@
+language: go
+dist: trusty
+os:
+- linux
+go:
+- 1.10.x
+go_import_path: github.com/kdruelle/sslcap
+install:
+- go get github.com/mitchellh/gox
+- go get github.com/goreleaser/nfpm/cmd/nfpm
+- go get -u github.com/golang/dep/cmd/dep
+- dep ensure
+script:
+- make ci
+addons:
+  apt:
+    packages:
+    - rpm
+before_deploy:
+  - cd $TRAVIS_BUILD_DIR
+  - ls ./
+  - ls dist/*
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: VZOHuGTwOZwLDuULygJuYvAjxnU/oJIYyl0mv4qPk1J+JT1Mlprq/WFi/AIQxrAUA1CYga+o9D4dmE6hzIWUcnmFFlJUDkNm59mhFZmgee6FkjdCEQ0ergxfY3uoMK6iuP7HTtF8Hqqux7Kj6iNzLY9lGL1xFVRhQgPHTsvCorDgZHEXG5IDDj0xFKg6kNZmDEwUzJk5acWJ173HQs/MSZLLmCQZrAuHID+TqmgDFSXpt6JvhmBWMgnhrGO/rxCKfNZDzvgxNUgEpYrNJxUVwLRyK7y41UuxeoxpR+gpIJgj7ZhW1XMAIp9BJfT9HdladNWGTVWC5f+XFhee9EJfI8iFljNTt4oUcKCYnFy0aCjnxB4ddH4KNgfbz8rxT3Z6yrQKAXZk2EBInQb95k98eqC9OPVOaA6MX4vCX/X0GnYn9zlO7YYs90t+0s5MaGEPxc6zfvYjJ+6wr4fWfqxjOznmsGAfqeBpZYuoJP8F/2oeByLLSykmz4sZeo4dEzZlM/NWT/7zuZnd+VxtX+xUXwx8yAxh46/amm+TlfMT24TnrYV5OTk1KDjRCAOIHVxYRboQLRS/81eZBGZEwJKlp0dpOV7CXKIMzFL+iZm0HB/LDiyf5yO5ijw08it++CV6ef6+u56osYgu7WkNos/39g/gZCCtOR4gGZnSWZSpCjU=
+  file_glob: true
+  file: 
+    - dist/*
+  on:
+    tags: true

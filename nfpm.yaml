@@ -1,0 +1,20 @@
+# nfpm example config file
+name: "sslcap"
+arch: "386"
+platform: "linux"
+version: "${SSLCAP_VERSION}"
+section: "default"
+priority: "extra"
+replaces:
+- sslcap
+provides:
+- sslcap
+depends:
+maintainer: "Kevin Druelle <kevin@druelle.info>"
+description: |
+    SSLCap is a simple debug proxy supporting SSL
+homepage: "http://eaxmple.com"
+license: "MIT"
+bindir: "/usr/local/bin"
+files:
+    ./bin/sslcap-v1.0.0-linux-386: "/usr/local/bin/sslcap"
